@@ -32,8 +32,8 @@ $lockFileExpirationSeconds - Upon loading a capcha challenge image (capcha-form.
 $captchaFileExpirationSeconds - Time to live of a captcha image. In other words, if a captcha image file is older than this number of seconds, solved or not, it will be ignored and/or deleted upon the next cleanup cycle. By default, 30 minutes.
 
 ###Requirements:
-Web server with PHP installed
-SCP access or some other method by which to transfer files into a specified /images directory
-Web user has read/write/delete access to /images directory
+- Web server with PHP installed
+- SCP access or some other method by which to transfer files into a specified /images directory
+- Web user has read/write/delete access to /images directory
 
 ===========
