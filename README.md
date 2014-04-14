@@ -1,6 +1,5 @@
-CaptchaFarm
+#CaptchaFarm
 ##A database-less PHP captcha farm
-===========
 
 ###Usage:
 This app can be used to provide a central location for multiple human beings to simultaneously solve captcha challenges via a simple interface, on behalf of a computer. One example use case for this type of application is as part of an automated functional testing solution. If multiple distributed automated functional tests require the user to solve a captcha challenge, then this CaptchaFarm can be used to provide a portal for one or multiple users to solve these captchas and provide responses for the tests to use. This would allow the tests to run without directly prompting a user for input, and would allow for the tests to be run in a distributed environment, e.g. across multiple VMs. Other uses are up to your imagination. 
@@ -36,3 +35,5 @@ $captchaFileExpirationSeconds - Time to live of a captcha image. In other words,
 Web server with PHP installed
 SCP access or some other method by which to transfer files into a specified /images directory
 Web user has read/write/delete access to /images directory
+
+===========
