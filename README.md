@@ -1,13 +1,12 @@
 CaptchaFarm
+##A database-less PHP captcha farm
 ===========
 
-#A database-less PHP captcha farm
-
-##Usage:
+###Usage:
 This app can be used to provide a central location for multiple human beings to simultaneously solve captcha challenges via a simple interface, on behalf of a computer. One example use case for this type of application is as part of an automated functional testing solution. If multiple distributed automated functional tests require the user to solve a captcha challenge, then this CaptchaFarm can be used to provide a portal for one or multiple users to solve these captchas and provide responses for the tests to use. This would allow the tests to run without directly prompting a user for input, and would allow for the tests to be run in a distributed environment, e.g. across multiple VMs. Other uses are up to your imagination. 
 Please don't use CaptchaFarm for less savory purposes. :)
 
-##Instructions:
+###Instructions:
 This captcha farm is relatively simple and comes in 2 parts-- the interface for humans to solve captcha images (captcha-form.php) and a basic API for your application to poll for a result (pollresponses.php).
 
 1. Dump your captcha challenge png images into the /images directory. 
@@ -22,7 +21,7 @@ This captcha farm is relatively simple and comes in 2 parts-- the interface for 
 
 	Notes: In this case, "abc" would be the filename that was uploaded to the images folder, e.g. "images/abc.png". This API either returns a blank response (no solution provided yet) or returns the response text provided by the human captcha solver. It is advisable to have your application call back to pollresponses.php (with a brief wait period) until it receives a text response. It might also want to give up after some period of time. Adding ?cleanup to the URL will delete the associated .png and .txt files in the images directory immediately upon returning a (non-blank) result. e.g. "pollresponses.php?challenge=abc&cleanup". 
 	
-##Notable Configuration Settings:
+###Notable Configuration Settings:
 The following configuration settings can be found in config.php:
 
 $imagesDir - This is the directory in which the app will look for captcha images to solve. By default it is images. Make sure your web user has sufficient privs to read/write/delete files here.
@@ -33,7 +32,7 @@ $lockFileExpirationSeconds - Upon loading a capcha challenge image (capcha-form.
 
 $captchaFileExpirationSeconds - Time to live of a captcha image. In other words, if a captcha image file is older than this number of seconds, solved or not, it will be ignored and/or deleted upon the next cleanup cycle. By default, 30 minutes.
 
-##Requirements:
+###Requirements:
 Web server with PHP installed
 SCP access or some other method by which to transfer files into a specified /images directory
 Web user has read/write/delete access to /images directory
