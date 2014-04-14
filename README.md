@@ -10,7 +10,7 @@ This captcha farm is relatively simple and comes in 2 parts-- the interface for 
 
 1. Dump your captcha challenge png images into the /images directory. 
 
-	Notes: This can be performed via scp or ftp or any other acceptable method. Keep in mind that images will only be recognized if they are in the prescribed directory, and in the configured format (.png by default). You can change either of these configuration settings in config.php (by changing $images_dir and $fileSuffix respectively.) Ensure that the web user on your server has the ability to read/write/delete files from this /images directory.
+	Notes: This can be performed via scp or ftp or any other acceptable method. Keep in mind that images will only be recognized if they are in the prescribed directory, and in the configured format (.png by default). You can change either of these configuration settings in config.php (by changing $imagesDir and $fileSuffix respectively.) Ensure that the web user on your server has the ability to read/write/delete files from this /images directory.
 
 2. Users should visit /captcha-form.php and solve captcha images until there are none left.
 
