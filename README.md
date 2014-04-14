@@ -16,16 +16,16 @@ This captcha farm is relatively simple and comes in 2 parts-- the interface for 
 
 2. Users should visit /captcha-form.php and solve captcha images until there are none left.
 
-	Notes: Adding ?purge to the URL will clean up any old files (or unnecessary files) in the images directory. i.e. /captcha-form.php?purge
+	Notes: Adding ?cleanup to the URL will clean up any old files (or unnecessary files) in the images directory. i.e. /captcha-form.php?cleanup
 
 3. Your application can make requests to pollresponses.php?challenge=abc in order to check for a solution to a specific captcha. 
 
-	Notes: In this case, "abc" would be the filename that was uploaded to the images folder, e.g. "images/abc.png". This API either returns a blank response (no solution provided yet) or returns the response text provided by the human captcha solver. It is advisable to have your application call back to pollresponses.php (with a brief wait period) until it receives a text response. It might also want to give up after some period of time.
+	Notes: In this case, "abc" would be the filename that was uploaded to the images folder, e.g. "images/abc.png". This API either returns a blank response (no solution provided yet) or returns the response text provided by the human captcha solver. It is advisable to have your application call back to pollresponses.php (with a brief wait period) until it receives a text response. It might also want to give up after some period of time. Adding ?cleanup to the URL will delete the associated .png and .txt files in the images directory immediately upon returning a (non-blank) result. e.g. "pollresponses.php?challenge=abc&cleanup". 
 	
 Notable Configuration Settings:
-The following configuration settings can be found toward the top of captcha-form.php:
+The following configuration settings can be found in config.php:
 
-$images_dir - This is the directory in which the app will look for captcha images to solve. By default it is images. Make sure your web user has sufficient privs to read/write/delete files here.
+$imagesDir - This is the directory in which the app will look for captcha images to solve. By default it is images. Make sure your web user has sufficient privs to read/write/delete files here.
 
 $fileSuffix - This is the file extension that the app will look for capcha images to be in. By default, it is .png.
 
