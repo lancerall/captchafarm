@@ -134,7 +134,11 @@ foreach($thisdir as $file){
 		if ($thisFileAge > $captchaFileExpirationSeconds) {
 			if ($debug) print "<!-- This file is greater than $captchaFileExpirationSeconds seconds old. Deleting it. -->\n";
 			if (!$safe) unlink($fullFileName);
-			else if ($debug) print "<!-- SAFE MODE: Skipping delete. -->\n";
+			else if ($debug) print "<!-- SAFE MODE: Skipping delete of $fullFileName. -->\n";
+			if (file_exists($fullTextFileName)){
+				if (!$safe) unlink($fullTextFileName);
+				else if ($debug) print "<!-- SAFE MODE: Skipping delete of $fullTextFileName -->\n";
+			}
 		}
 		else{
 			if ($debug) print "<!-- This file is new enough to answer ($thisFileAge < $captchaFileExpirationSeconds seconds). Proceeding. -->\n";
