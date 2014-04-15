@@ -4,7 +4,7 @@
 	      type="image/png" 
 	      href="favicon.png">
 </head>
-<body>
+<body style="font-family:Arial,Vardana,Sans-serif; font-size: 12px;">
 <?php
 require_once("config.php");
 
@@ -61,12 +61,68 @@ if (ISSET($_POST["response"])){
 }
 else if ($debug) print "<!-- Did not receive post. -->\n";
 
+
+$thisdir = scandir($imagesDir);
+print '<dir id="statusboard" style="width: 208px; border: 2px solid #ddd; padding:0px; float:left; margin:10px;">';
+foreach($thisdir as $file){
+	if (substr($file,0,1) != "."){
+		$thisFileSuffix = substr($file,strlen($file)-strlen($fileSuffix),strlen($fileSuffix));
+		$thisFileNoSuffix = substr($file,0,strlen($file)-strlen($thisFileSuffix));
+		if ($thisFileSuffix == $fileSuffix) {
+			$textfile = substr($file,0,strlen($file)-strlen($fileSuffix)).".txt"; // construct .txt file name
+			$fullTextFileName = $imagesDir."/".$textfile;
+			if (file_exists($fullTextFileName)) {
+				$text=file_get_contents($fullTextFileName);
+				if ($text != "") {
+					$status="complete"; // This captcha has been solved
+				}
+				else {
+					$now = microtime(true);
+					$diff = $now - filemtime($fullTextFileName);
+					if ($diff > $lockFileExpirationSeconds) $status="open"; // Lock file exists but has expired
+					else $status="locked"; // Lock file exists and it is recent
+				}
+			}
+			else $status="open";
+			print '<div style="width:200px; border: 2px solid #444; margin: 2px;">';
+			if ($status == "complete") $icon = "yes.gif";
+			elseif ($status == "locked") $icon = "no.gif";
+			elseif ($status == "open") $icon = "blank.gif";
+			print '<img src="'.$icon.'" width=30 style="vertical-align: middle;" />';
+			if ($status=="locked") {
+				$countdown = $diff - $lockFileExpirationSeconds;
+				
+				print '<script>
+				var count'.$thisFileNoSuffix.'='.abs(round($countdown)).';
+				var counter'.$thisFileNoSuffix.'=setInterval(timer'.$thisFileNoSuffix.', 1000);
+				function timer'.$thisFileNoSuffix.'()
+				{
+				  count'.$thisFileNoSuffix.'=count'.$thisFileNoSuffix.'-1;
+				  if (count'.$thisFileNoSuffix.' <= 0)
+				  {
+				     clearInterval(counter'.$thisFileNoSuffix.');
+					document.getElementById("'.$thisFileNoSuffix.'").innerHTML=0; 
+				     return;
+				  }
+
+				 document.getElementById("'.$thisFileNoSuffix.'").innerHTML=count'.$thisFileNoSuffix.'; 
+				}
+				</script>';
+				print '(<span id="'.$thisFileNoSuffix.'">'.abs(round($countdown)).'</span>) ';
+				}
+			print $file.'</div>';
+		}
+	} 
+}
+print '</dir>';
+
+
 $thisdir = scandir($imagesDir);
 foreach($thisdir as $file){
 	$fullFileName = $imagesDir."/".$file;
 	$thisFileSuffix = substr($file,strlen($file)-strlen($fileSuffix),strlen($fileSuffix));
 	$thisFileNoSuffix = substr($file,0,strlen($file)-strlen($thisFileSuffix));
-	$textfile = substr($file,0,strlen($file)-4).".txt"; // construct .txt file name
+	$textfile = substr($file,0,strlen($file)-strlen($fileSuffix)).".txt"; // construct .txt file name
 	$fullTextFileName = $imagesDir."/".$textfile;
 	$now = microtime(true);
 	
@@ -132,17 +188,17 @@ foreach($thisdir as $file){
 }
 
 if ($challengefile) {
-	
+	print '<div id="captchaformdiv" style="border: 2px solid #ddd; width: 500px; float: left; margin-top: 10px; padding: 10px;">';
 	print '<form name="captcha" method="post" action="captcha-form.php?';
 	if ($debug) print 'debug';
 	if ($cleanup) print '&cleanup';
 	if ($safe) print '&safe';
 	print '" >'."\n";
 	
-	print "\t".'<img src="'.$imagesDir.'/'.$challengefile.'" /><br />'."\n";
-	
 	print "\t$imagesDir/$challengefile<br />\n";
 	
+	print "\t".'<img src="'.$imagesDir.'/'.$challengefile.'" /><br /><br />'."\n";
+		
 	print "\t".'<input type="text" name="response" />'."\n";
 	
 	print "\t".'<input type="hidden" name="textfile" value="'.$textfile.'" />'."\n";
@@ -150,9 +206,13 @@ if ($challengefile) {
 	print "\t".'<input type="submit" value="Submit">'."\n";
 	
 	print "</form>\n";
-	
+	print "</div>";
 }
-else print "No challenges to answer.";
+else {
+	print '<div id="captchaformdiv" style="border: 2px solid #ddd; width: 500px; float: left; margin-top: 10px; padding: 10px;">';
+	print "No challenges to answer.";
+	print "</div>";
+}
 
 ?>
 </body>
