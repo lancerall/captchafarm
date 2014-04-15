@@ -88,7 +88,7 @@ foreach($thisdir as $file){
 			if ($status == "complete") $icon = "yes.gif";
 			elseif ($status == "locked") $icon = "no.gif";
 			elseif ($status == "open") $icon = "blank.gif";
-			print '<img src="'.$icon.'" width=30 style="vertical-align: middle;" />';
+			print '<img src="'.$icon.'" id="img'.$thisFileNoSuffix.'" width=30 style="vertical-align: middle;" />';
 			if ($status=="locked") {
 				$countdown = $diff - $lockFileExpirationSeconds;
 				
@@ -101,14 +101,15 @@ foreach($thisdir as $file){
 				  if (count'.$thisFileNoSuffix.' <= 0)
 				  {
 				     clearInterval(counter'.$thisFileNoSuffix.');
-					document.getElementById("'.$thisFileNoSuffix.'").innerHTML=0; 
+					document.getElementById("'.$thisFileNoSuffix.'").innerHTML=""; 
+					document.getElementById("img'.$thisFileNoSuffix.'").src="blank.gif";
 				     return;
 				  }
 
-				 document.getElementById("'.$thisFileNoSuffix.'").innerHTML=count'.$thisFileNoSuffix.'; 
+				 document.getElementById("'.$thisFileNoSuffix.'").innerHTML="("+count'.$thisFileNoSuffix.'+") "; 
 				}
 				</script>';
-				print '(<span id="'.$thisFileNoSuffix.'">'.abs(round($countdown)).'</span>) ';
+				print '<span id="'.$thisFileNoSuffix.'">('.abs(round($countdown)).') </span>';
 				}
 			print $file.'</div>';
 		}
