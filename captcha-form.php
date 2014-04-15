@@ -188,7 +188,7 @@ foreach($thisdir as $file){
 	}
 }
 
-if ($challengefile) {
+if (ISSET($challengefile)) {
 	print '<div id="captchaformdiv" style="border: 2px solid #ddd; width: 500px; float: left; margin-top: 10px; padding: 10px;">';
 	print '<form name="captcha" method="post" action="captcha-form.php?';
 	if ($debug) print 'debug';
