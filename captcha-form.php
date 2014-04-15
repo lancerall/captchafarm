@@ -66,6 +66,7 @@ $thisdir = scandir($imagesDir);
 print '<dir id="statusboard" style="width: 208px; border: 2px solid #ddd; padding:0px; float:left; margin:10px;">';
 foreach($thisdir as $file){
 	if (substr($file,0,1) != "."){
+		$fullFileName = $imagesDir."/".$file;
 		$thisFileSuffix = substr($file,strlen($file)-strlen($fileSuffix),strlen($fileSuffix));
 		$thisFileNoSuffix = substr($file,0,strlen($file)-strlen($thisFileSuffix));
 		if ($thisFileSuffix == $fileSuffix) {
@@ -112,7 +113,9 @@ foreach($thisdir as $file){
 				</script>';
 				print '<span id="'.$thisFileNoSuffix.'">('.abs(round($countdown)).') </span>';
 				}
-			print $file.'</div>';
+			print $file;
+			print '<img src="'.$fullFileName.'" style="width: 200px;" />';
+			print '</div>';
 		}
 	} 
 }
