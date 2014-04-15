@@ -4,7 +4,7 @@
 	      type="image/png" 
 	      href="favicon.png">
 </head>
-<body style="font-family:Arial,Vardana,Sans-serif; font-size: 12px;">
+<body style="font-family:Arial,Vardana,Sans-serif; font-size: 12px;" OnLoad="document.captcha.response.focus();">
 <?php
 require_once("config.php");
 
@@ -61,7 +61,7 @@ if (ISSET($_POST["response"])){
 }
 else if ($debug) print "<!-- Did not receive post. -->\n";
 
-
+$numFiles = 0;
 $thisdir = scandir($imagesDir);
 print '<dir id="statusboard" style="width: 208px; border: 2px solid #ddd; padding:0px; float:left; margin:10px;">';
 foreach($thisdir as $file){
@@ -69,6 +69,7 @@ foreach($thisdir as $file){
 		$thisFileSuffix = substr($file,strlen($file)-strlen($fileSuffix),strlen($fileSuffix));
 		$thisFileNoSuffix = substr($file,0,strlen($file)-strlen($thisFileSuffix));
 		if ($thisFileSuffix == $fileSuffix) {
+			$numFiles++;
 			$textfile = substr($file,0,strlen($file)-strlen($fileSuffix)).".txt"; // construct .txt file name
 			$fullTextFileName = $imagesDir."/".$textfile;
 			if (file_exists($fullTextFileName)) {
@@ -115,6 +116,7 @@ foreach($thisdir as $file){
 		}
 	} 
 }
+if ($numFiles==0) print '<div style="width:200px; border: 2px solid #444; margin: 2px; text-align: center;">No Captcha Files.</div>';
 print '</dir>';
 
 
