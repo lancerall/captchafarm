@@ -1,6 +1,7 @@
 <?php
 require_once 'Swift-5.1.0/lib/swift_required.php';
 require_once 'email_config.php';
+require_once 'email_recipients.php';
 date_default_timezone_set('America/Chicago');
 
 // Create the Transport
@@ -17,7 +18,7 @@ $mailer = Swift_Mailer::newInstance($transport);
 // Create a message
 $message = Swift_Message::newInstance('There be Captchas!')
   ->setFrom(array('captcha@xpanxion.com' => 'Captcha Monitor'))
-  ->setTo(array('tbranstiter@xpanxion.com' => "Tyler Branstiter", 'asorensen@xpanxion.com' => 'Adam Sorensen', 'lrall@xpanxion.com' => "Lance Rall"))
+  ->setTo($emailRecipients)
   ->setBody('There are new captchas to solve. Please visit:
 http://192.168.27.253/captchafarm/captcha-form.php?debug&cleanup')
   ;
