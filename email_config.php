@@ -1,4 +1,4 @@
 <?php
-$email_username = str_rot13("yenyy@kcnakvba.pbz");
-$email_password = str_rot13("!nznq0yg");
+$email_username = "your@email.com";
+$email_password = "Password1";
 ?>
