@@ -212,7 +212,8 @@ else {
 
 function create_statusboard_block($file, $fullFileName, $thisFileNoSuffix, $status, $diff){
 	GLOBAL $lockFileExpirationSeconds;
-	$escapedThisFileNoSuffix = str_replace("-", "", $thisFileNoSuffix);
+	$escapechars = array("!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "+", "=", "`", "~", ",", ".", "<", ">", "?", "/", "{", "}", "[", "]", "\\", "|");
+	$escapedThisFileNoSuffix = str_replace($escapechars, "", $thisFileNoSuffix);
 	$statusboard .= "\n\t".'<div style="width:200px; border: 2px solid #444; margin: 2px;">'."\n";
 	if ($status == "complete") $icon = "yes.gif";
 	elseif ($status == "locked") $icon = "no.gif";
