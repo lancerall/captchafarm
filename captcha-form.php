@@ -212,36 +212,36 @@ else {
 
 function create_statusboard_block($file, $fullFileName, $thisFileNoSuffix, $status, $diff){
 	GLOBAL $lockFileExpirationSeconds;
-	
+	$escapedThisFileNoSuffix = str_replace("-", "", $thisFileNoSuffix);
 	$statusboard .= "\n\t".'<div style="width:200px; border: 2px solid #444; margin: 2px;">'."\n";
 	if ($status == "complete") $icon = "yes.gif";
 	elseif ($status == "locked") $icon = "no.gif";
 	elseif ($status == "open") $icon = "blank.gif";
-	$statusboard .= "\t\t".'<img src="'.$icon.'" id="img'.$thisFileNoSuffix.'" width=30 style="vertical-align: middle;" />'."\n";
+	$statusboard .= "\t\t".'<img src="'.$icon.'" id="img'.$escapedThisFileNoSuffix.'" width=30 style="vertical-align: middle;" />'."\n";
 	if ($status=="locked") {
 		$countdown = $diff - $lockFileExpirationSeconds;
 
 		$statusboard .= "\t\t".'<script>
-		var count'.$thisFileNoSuffix.'='.abs(round($countdown)).';
-		var counter'.$thisFileNoSuffix.'=setInterval(timer'.$thisFileNoSuffix.', 1000);
-		function timer'.$thisFileNoSuffix.'()
+		var count'.$escapedThisFileNoSuffix.'='.abs(round($countdown)).';
+		var counter'.$escapedThisFileNoSuffix.'=setInterval(timer'.$escapedThisFileNoSuffix.', 1000);
+		function timer'.$escapedThisFileNoSuffix.'()
 		{
-		  count'.$thisFileNoSuffix.'=count'.$thisFileNoSuffix.'-1;
-		  if (count'.$thisFileNoSuffix.' <= 0)
+		  count'.$escapedThisFileNoSuffix.'=count'.$escapedThisFileNoSuffix.'-1;
+		  if (count'.$escapedThisFileNoSuffix.' <= 0)
 		  {
-		     clearInterval(counter'.$thisFileNoSuffix.');
-			document.getElementById("'.$thisFileNoSuffix.'").innerHTML=""; 
-			document.getElementById("img'.$thisFileNoSuffix.'").src="blank.gif";
+		     clearInterval(counter'.$escapedThisFileNoSuffix.');
+			document.getElementById("'.$escapedThisFileNoSuffix.'").innerHTML=""; 
+			document.getElementById("img'.$escapedThisFileNoSuffix.'").src="blank.gif";
 		     return;
 		  }
 
-		 document.getElementById("'.$thisFileNoSuffix.'").innerHTML="("+count'.$thisFileNoSuffix.'+") "; 
+		 document.getElementById("'.$escapedThisFileNoSuffix.'").innerHTML="("+count'.$escapedThisFileNoSuffix.'+") "; 
 		}
 		</script>'."\n";
-		$statusboard .= "\t\t".'<span id="'.$thisFileNoSuffix.'">('.abs(round($countdown)).') </span>';
+		$statusboard .= "\t\t".'<span id="'.$escapedThisFileNoSuffix.'">('.abs(round($countdown)).') </span>';
 		}
-	$statusboard .= $file;
-	$statusboard .= "\t".'<img src="'.$fullFileName.'" style="width: 200px;" />'."\n";
+	$statusboard .= '<a href="pollresponses.php?challenge='.$thisFileNoSuffix.'" target="_new">'.$file.'</a>';
+	$statusboard .= "\t".'<a href="pollresponses.php?challenge='.$thisFileNoSuffix.'" target="_new"><img src="'.$fullFileName.'" style="width: 200px;" /></a>'."\n";
 	$statusboard .= "\t".'</div>';
 	
 	return $statusboard;
