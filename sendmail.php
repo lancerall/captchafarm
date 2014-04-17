@@ -5,9 +5,7 @@ require_once 'config/email_recipients.php';
 date_default_timezone_set('America/Chicago');
 
 // Create the Transport
-$server = 'smtp.emailsrvr.com';
-
-$transport = Swift_SmtpTransport::newInstance($server, 25)
+$transport = Swift_SmtpTransport::newInstance($email_server, $email_port)
   ->setUsername($email_username)
   ->setPassword($email_password)
   ;

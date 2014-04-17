@@ -20,18 +20,25 @@ This captcha farm is relatively simple and comes in 2 parts-- the interface for 
 
 3. Your application can make requests to pollresponses.php?challenge=abc in order to check for a solution to a specific captcha. 
 
-	Notes: In this case, "abc" would be the filename that was uploaded to the images folder, e.g. "images/abc.png". This API either returns a blank response (no solution provided yet) or returns the response text provided by the human captcha solver. It is advisable to have your application call back to pollresponses.php (with a brief wait period) until it receives a text response. It might also want to give up after some period of time. Adding ?cleanup to the URL will delete the associated .png and .txt files in the images directory immediately upon returning a (non-blank) result. e.g. "pollresponses.php?challenge=abc&cleanup". 
+	Notes: In this case, "abc" would be the filename (without extension) that was uploaded to the images folder, e.g. "images/abc.png". This API either returns a blank response (no solution provided yet) or returns the response text provided by the human captcha solver. It is advisable to have your application call back to pollresponses.php (with a brief wait period) until it receives a text response. It might also want to give up after some period of time. Adding ?cleanup to the URL will delete the associated .png and .txt files in the images directory immediately upon returning a (non-blank) result. e.g. "pollresponses.php?challenge=abc&cleanup". 
 	
 Notable Configuration Settings:
-The following configuration settings can be found in config.php:
+The following configuration settings can be found in config/config.php:
 
 $imagesDir - This is the directory in which the app will look for captcha images to solve. By default it is images. Make sure your web user has sufficient privs to read/write/delete files here.
 
 $fileSuffix - This is the file extension that the app will look for capcha images to be in. By default, it is .png.
 
-$lockFileExpirationSeconds - Upon loading a capcha challenge image (capcha-form.php), that human being has a certain amount of time to solve the image before it is potentially given out to a different human. By default, this is set to 30 seconds.
+$lockFileExpirationSeconds - Upon loading a capcha challenge image (capcha-form.php), that human being has a certain amount of time to solve the image before it is potentially given out to a different human. By default, this is set to 10 seconds.
 
-$captchaFileExpirationSeconds - Time to live of a captcha image. In other words, if a captcha image file is older than this number of seconds, solved or not, it will be ignored and/or deleted upon the next cleanup cycle. By default, 30 minutes.
+$captchaFileExpirationSeconds - Time to live of a captcha image. In other words, if a captcha image file is older than this number of seconds, solved or not, it will be ignored and/or deleted upon the next cleanup cycle. By default, 10 minutes.
+
+The following configuration settings can be found in config/email_config.php
+$email_server - SMTP server name used for sending email notifications ("There are new captchas to solve")
+$email_port - Port number (typically 25) used to send mail via SMTP server
+$email_username - Username used to send mail via this SMTP server
+$email_password - Email password used to send mail via this SMTP server
+$emailRecipients - List of email addresses that should receive mail when the sendmail.php script is initiated, i.e. people who should be notified when new Captcha challenge images are available
 
 Requirements:
 Web server with PHP installed
