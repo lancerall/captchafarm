@@ -232,7 +232,7 @@ function create_statusboard_block($file, $fullFileName, $thisFileNoSuffix, $stat
 		  {
 		     clearInterval(counter'.$escapedThisFileNoSuffix.');
 			document.getElementById("'.$escapedThisFileNoSuffix.'").innerHTML=""; 
-			document.getElementById("img'.$escapedThisFileNoSuffix.'").src="blank.gif";
+			document.getElementById("img'.$escapedThisFileNoSuffix.'").src="img/blank.gif";
 		     return;
 		  }
 
