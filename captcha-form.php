@@ -15,6 +15,7 @@ if (ISSET($_GET["cleanup"])) $cleanup = true; # Delete any files that don't belo
 else $cleanup = false;
 if (ISSET($_GET["safe"])) $safe = true; # Don't delete anything 
 else $safe = false;
+if (ISSET($_GET["user"])) $user = $_GET["user"];
 
 if ($debug) {
 	print "<!-- Configs:\n
@@ -50,6 +51,7 @@ if (ISSET($_POST["response"])){
 					if ($debug) print "<!-- Since the file is blank, I'm replacing its contents with $postresponse -->\n";
 					file_put_contents($imagesDir."/".$posttextfile, $postresponse);
 					if ($debug) print "Stored challenge response of $postresponse for $posttextfile <br />";
+					if ($user) update_user_score($user);
 				}
 				else{
 					if ($debug) print "Challenge has already been answered. <br />";
@@ -182,6 +184,7 @@ if (ISSET($challengefile)) {
 	if ($debug) print 'debug';
 	if ($cleanup) print '&cleanup';
 	if ($safe) print '&safe';
+	if ($user) print '&user='.$user;
 	print '" >'."\n";
 	
 	print "\t$imagesDir/$challengefile<br />\n";
@@ -203,7 +206,10 @@ else {
 	print "</div>";
 }
 
+include("leaderboard.php");
+
 ?>
+
 </body>
 </html>
 
@@ -247,6 +253,22 @@ function create_statusboard_block($file, $fullFileName, $thisFileNoSuffix, $stat
 	
 	return $statusboard;
 }
+
+function update_user_score($user){
+	GLOBAL $leaderboardDir;
+	$scorefile = $leaderboardDir."/".$user.".score";
+	if (file_exists($scorefile)) {
+		$score = file_get_contents($scorefile);
+		$score++;
+		file_put_contents($scorefile, $score);
+	}
+	else {
+		file_put_contents($scorefile, "1");
+	}
+}
+
+
+
 
 
 ?>
