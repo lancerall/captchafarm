@@ -2,7 +2,7 @@
 <head><title>Captcha Farm&trade;</title>
 	<link rel="icon" 
 	      type="image/png" 
-	      href="favicon.png">
+	      href="img/favicon.png">
 </head>
 <body style="font-family:Arial,Vardana,Sans-serif; font-size: 12px;" OnLoad="document.captcha.response.focus();">
 <?php
@@ -218,7 +218,7 @@ function create_statusboard_block($file, $fullFileName, $thisFileNoSuffix, $stat
 	if ($status == "complete") $icon = "yes.gif";
 	elseif ($status == "locked") $icon = "no.gif";
 	elseif ($status == "open") $icon = "blank.gif";
-	$statusboard .= "\t\t".'<img src="'.$icon.'" id="img'.$escapedThisFileNoSuffix.'" width=30 style="vertical-align: middle;" />'."\n";
+	$statusboard .= "\t\t".'<img src="img/'.$icon.'" id="img'.$escapedThisFileNoSuffix.'" width=30 style="vertical-align: middle;" />'."\n";
 	if ($status=="locked") {
 		$countdown = $diff - $lockFileExpirationSeconds;
 
