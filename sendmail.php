@@ -1,7 +1,6 @@
 <?php
 require_once 'Swift-5.1.0/lib/swift_required.php';
 require_once 'config/email_config.php';
-require_once 'config/email_recipients.php';
 date_default_timezone_set('America/Chicago');
 
 // Create the Transport
