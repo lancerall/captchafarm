@@ -1,5 +1,5 @@
 <?php
-require_once("config.php");
+require_once("config/config.php");
 
 $debug = false;
 $cleanup = false;
