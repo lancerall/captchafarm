@@ -6,7 +6,7 @@
 </head>
 <body style="font-family:Arial,Vardana,Sans-serif; font-size: 12px;" OnLoad="document.captcha.response.focus();">
 <?php
-require_once("config.php");
+require_once("config/config.php");
 
 $debug = false;
 if (ISSET($_GET["debug"])) $debug = true; # Display play-by-play commentary in html comments
