@@ -49,7 +49,7 @@ require_once("config/config.php");
 <?php
 	print "setInterval(updateTitle, $titleUpdateFrequencyMSeconds);";
 ?>
-		
+	updateTitle();
 	</script>
 <?php
 
