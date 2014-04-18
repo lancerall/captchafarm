@@ -1,3 +1,7 @@
+<?php
+require_once("config/config.php");
+
+?>
 <html>
 <head><title>Captcha Farm&trade;</title>
 	<link rel="icon" 
@@ -5,8 +9,49 @@
 	      href="img/favicon.png">
 </head>
 <body style="font-family:Arial,Vardana,Sans-serif; font-size: 12px;" OnLoad="document.captcha.response.focus();">
+	<script>
+	
+	function makeHttpObject() {
+	  try {return new XMLHttpRequest();}
+	  catch (error) {}
+	  try {return new ActiveXObject("Msxml2.XMLHTTP");}
+	  catch (error) {}
+	  try {return new ActiveXObject("Microsoft.XMLHTTP");}
+	  catch (error) {}
+
+	  throw new Error("Could not create HTTP request object.");
+	}
+	
+		function simpleHttpRequest(url) {
+		  var request = makeHttpObject();
+		  request.open("GET", url, true);
+		  request.send(null);
+		  request.onreadystatechange = function() {
+		    if (request.readyState == 4) {
+		      if (request.status == 200)
+		        return request.responseText;
+		      else if (failure)
+		        return request.statusText;
+		    }
+		  };
+		}
+
+	function updateTitle(){
+		var request = makeHttpObject();
+		request.open("GET", "captchacount.php", false);
+		request.send(null);
+		if (request.responseText > 0){
+			document.title = "(" + request.responseText + ") Captcha Farm&trade;";
+		}
+		else document.title = "Captcha Farm&trade;";
+	}
+	
 <?php
-require_once("config/config.php");
+	print "setInterval(updateTitle, $titleUpdateFrequencyMSeconds);";
+?>
+		
+	</script>
+<?php
 
 $debug = false;
 if (ISSET($_GET["debug"])) $debug = true; # Display play-by-play commentary in html comments
