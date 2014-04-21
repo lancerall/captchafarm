@@ -1,5 +1,7 @@
 <?php
 
+include('config/config.php');
+
 print '<div id="leaderboard" style="border: 2px solid #444; width: 200px; float: right; margin: 10px; padding: 2px;">'."\n";
 print '<div style="text-align: center;">Leaderboard</div>';
 $leaders = array();
