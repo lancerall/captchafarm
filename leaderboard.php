@@ -20,7 +20,12 @@ foreach($leaders as $name => $score){
 	print '<div style="border: 2px solid #ddd; margin: 2px; padding:2 10 2 2; text-align: right">';
 	print $name." : ".$score;
 	print "</div>\n";
+	$total += $score;
 }
+
+print '<div style="border: 2px solid #ddd; background-color: #eee; margin: 2px; padding:2 10 2 2; text-align: right">';
+print "Total : ".$total;
+print '</div>';
 
 print '</div>'."\n";
 
