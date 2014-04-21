@@ -22,7 +22,7 @@ require_once("config/config.php");
 	  throw new Error("Could not create HTTP request object.");
 	}
 	
-		function simpleHttpRequest(url) {
+/*		function simpleHttpRequest(url) {
 		  var request = makeHttpObject();
 		  request.open("GET", url, true);
 		  request.send(null);
@@ -35,21 +35,34 @@ require_once("config/config.php");
 		    }
 		  };
 		}
-
+*/
 	function updateTitle(){
 		var request = makeHttpObject();
 		request.open("GET", "captchacount.php", false);
 		request.send(null);
 		if (request.responseText > 0){
-			document.title = "(" + request.responseText + ") Captcha Farm&trade;";
+			document.title = "(" + request.responseText + ") Captcha Farm\u2122";
 		}
-		else document.title = "Captcha Farm&trade;";
+		else document.title = "Captcha Farm\u2122";
+	}
+	
+	function updateLeaders(){
+		var request = makeHttpObject();
+		request.open("GET", "leaderboard.php", false);
+		request.send(null);
+		if (request.responseText.length > 0){
+			document.getElementById("lbcontainer").innerHTML=request.responseText;
+		}
 	}
 	
 <?php
+	print "setInterval(updateLeaders, $leaderboardUpdateFrequencyMSeconds);";
 	print "setInterval(updateTitle, $titleUpdateFrequencyMSeconds);";
+
 ?>
 	updateTitle();
+	updateLeaders();
+	
 	</script>
 <?php
 
@@ -251,7 +264,9 @@ else {
 	print "</div>";
 }
 
-include("leaderboard.php");
+print '<div id="lbcontainer">&nbsp;';
+#include("leaderboard.php");
+print '</div>';
 
 ?>
 
